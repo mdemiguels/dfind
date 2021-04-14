@@ -20,6 +20,10 @@
                     <img src="build/img/logo.svg" alt="Logotipo de dfind">
                 </a>
 
+                <div class="mobile-menu">
+                    <img src="build/img/barras.svg" alt="Icono menu responsive">
+                </div>
+
                 <nav class="navegacion">
                     <a href="nosotros.html">Nosotros</a>
                     <a href="anuncios.html">Anuncios</a>
@@ -39,23 +43,46 @@
     <main class="contenedor seccion">
         <h1>Más sobre nosotros</h1>
 
-        <div class="iconos-nosotros">
-            <div class="icono">
-                <img src="build/img/icono1.svg" alt="Icono seguridad" loading="lazy">
-                <h3>Seguridad</h3>
-                <p>Los pagos en nuestra web son completamente seguros y por medio de Paypal.</p>
+        <!-- Slideshow container -->
+        <div class="slideshow-container">
+
+            <!-- Full-width images with number and caption text -->
+            <div class="mySlides fade">
+                <div class="numbertext">1 / 3</div>
+                <img src="build/img/encuentra.jpg" style="width:100%">
+                <div class="text">
+                    Los pagos en nuestra web son completamente seguros y por medio de Paypal.
+                </div>
             </div>
-            <div class="icono">
-                <img src="build/img/icono2.svg" alt="Icono precio" loading="lazy">
-                <h3>Precio</h3>
-                <p>Vive donde quieras a precios asequibles para todo tipo de clientes o gana dinero poniendo en alquiler
-                    una propiedad.</p>
+
+            <div class="mySlides fade">
+                <div class="numbertext">2 / 3</div>
+                <img src="build/img/encuentra.jpg" style="width:100%">
+                <div class="text">
+                    Vive donde quieras a precios asequibles para todo tipo de clientes o gana dinero poniendo en
+                    alquiler una propiedad.
+                </div>
             </div>
-            <div class="icono">
-                <img src="build/img/icono3.svg" alt="Icono tiempo" loading="lazy">
-                <h3>Tiempo</h3>
-                <p>Los pagos se realizan en el momento y mediante transacción rápida y sencilla.</p>
+
+            <div class="mySlides fade">
+                <div class="numbertext">3 / 3</div>
+                <img src="build/img/encuentra.jpg" style="width:100%">
+                <div class="text">
+                    Los pagos se realizan en el momento y mediante transacción rápida y sencilla.
+                </div>
             </div>
+
+            <!-- Next and previous buttons -->
+            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+        </div>
+        <br>
+
+        <!-- The dots/circles -->
+        <div style="text-align:center">
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
         </div>
     </main>
 
