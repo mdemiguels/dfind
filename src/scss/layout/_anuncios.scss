@@ -1,5 +1,11 @@
 @include tablet {
     .contenedor-anuncios {
+        @include grid(2, 2rem);
+    }
+}
+
+@include desktop {
+    .contenedor-anuncios {
         @include grid(3, 2rem);
     }
 }
@@ -43,3 +49,11 @@
         }
     }
 }
+
+#map {
+    display: flex;
+    justify-content: center;
+    width: 100%; 
+    height: 400px;
+}
+

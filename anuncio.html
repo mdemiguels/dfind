@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>dfind</title>
     <link rel="stylesheet" href="build/css/app.css">
+    <link rel="shortcut icon" href="build/img/fav.ico" />
 </head>
 
 <body>
@@ -16,7 +17,7 @@
         <div class="contenedor contenido-header">
 
             <div class="barra">
-                <a href="/">
+                <a href="index.html">
                     <img src="build/img/logo.svg" alt="Logotipo de dfind">
                 </a>
 
@@ -25,7 +26,6 @@
                 </div>
 
                 <div class="derecha">
-                    <img class="dark-mode-boton" src="build/img/dark-mode.svg" alt="Boton Dark Mode">
                     <nav class="navegacion">
                         <a href="nosotros.html">Nosotros</a>
                         <a href="anuncios.html">Anuncios</a>
@@ -44,117 +44,56 @@
     <main class="contenedor seccion contenido-centrado">
         <h1>Titulo de anuncio</h1>
 
-        <!-- Container for the image gallery -->
         <div class="container">
 
             <!-- Full-width images with number text -->
-            <div class="mySlides">
-                <div class="numbertext">1 / 6</div>
-                <picture>
-                    <source srcset="build/img/destacada.webp" type="image/webp">
-                    <source srcset="build/img/destacada.jpg" type="image/jpeg">
-                    <img src="build/img/destacada.jpg" alt="Imagen de la propiedad">
-                </picture>
+            <div class="mySlides-gallery">
+                <img src="build/img/destacada.jpg" style="width:100%">
             </div>
 
-            <div class="mySlides">
-                <div class="numbertext">2 / 6</div>
-                <picture>
-                    <source srcset="build/img/destacada2.webp" type="image/webp">
-                    <source srcset="build/img/destacada2.jpg" type="image/jpeg">
-                    <img src="build/img/destacada2.jpg" alt="Imagen de la propiedad">
-                </picture>
+            <div class="mySlides-gallery">
+                <img src="build/img/destacada.jpg" style="width:100%">
             </div>
 
-            <div class="mySlides">
-                <div class="numbertext">3 / 6</div>
-                <picture>
-                    <source srcset="build/img/destacada3.webp" type="image/webp">
-                    <source srcset="build/img/destacada3.jpg" type="image/jpeg">
-                    <img src="build/img/destacada3.jpg" alt="Imagen de la propiedad">
-                </picture>
+            <div class="mySlides-gallery">
+                <img src="build/img/destacada.jpg" style="width:100%">
             </div>
 
-            <div class="mySlides">
-                <div class="numbertext">4 / 6</div>
-                <picture>
-                    <source srcset="build/img/destacada.webp" type="image/webp">
-                    <source srcset="build/img/destacada.jpg" type="image/jpeg">
-                    <img src="build/img/destacada.jpg" alt="Imagen de la propiedad">
-                </picture>
+            <div class="mySlides-gallery">
+                <img src="build/img/destacada.jpg" style="width:100%">
             </div>
 
-            <div class="mySlides">
-                <div class="numbertext">5 / 6</div>
-                <picture>
-                    <source srcset="build/img/destacada2.webp" type="image/webp">
-                    <source srcset="build/img/destacada2.jpg" type="image/jpeg">
-                    <img src="build/img/destacada2.jpg" alt="Imagen de la propiedad">
-                </picture>
+            <div class="mySlides-gallery">
+                <img src="build/img/destacada.jpg" style="width:100%">
             </div>
 
-            <div class="mySlides">
-                <div class="numbertext">6 / 6</div>
-                <picture>
-                    <source srcset="build/img/destacada3.webp" type="image/webp">
-                    <source srcset="build/img/destacada3.jpg" type="image/jpeg">
-                    <img src="build/img/destacada3.jpg" alt="Imagen de la propiedad">
-                </picture>
+            <div class="mySlides-gallery">
+                <img src="build/img/destacada.jpg" style="width:100%">
             </div>
 
             <!-- Next and previous buttons -->
             <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
             <a class="next" onclick="plusSlides(1)">&#10095;</a>
 
-            <!-- Image text -->
-            <div class="caption-container">
-                <p id="caption"></p>
-            </div>
-
             <!-- Thumbnail images -->
             <div class="row">
                 <div class="column">
-                    <picture>
-                        <source srcset="build/img/destacada.webp" type="image/webp">
-                        <source srcset="build/img/destacada.jpg" type="image/jpeg">
-                        <img src="build/img/destacada.jpg" alt="Imagen de la propiedad" style="width:100%" onclick="currentSlide(1)">
-                    </picture>
-                    
+                    <img class="demo cursor" src="build/img/destacada.jpg" style="width:100%" onclick="currentSlide(1)">
                 </div>
                 <div class="column">
-                    <picture>
-                        <source srcset="build/img/destacada2.webp" type="image/webp">
-                        <source srcset="build/img/destacada2.jpg" type="image/jpeg">
-                        <img src="build/img/destacada2.jpg" alt="Imagen de la propiedad" style="width:100%" onclick="currentSlide(2)">
-                    </picture>
+                    <img class="demo cursor" src="build/img/destacada.jpg" style="width:100%" onclick="currentSlide(2)">
                 </div>
                 <div class="column">
-                    <picture>
-                        <source srcset="build/img/destacada3.webp" type="image/webp">
-                        <source srcset="build/img/destacada3.jpg" type="image/jpeg">
-                        <img src="build/img/destacada3.jpg" alt="Imagen de la propiedad" style="width:100%" onclick="currentSlide(3)">
-                    </picture>
+                    <img class="demo cursor" src="build/img/destacada.jpg" style="width:100%" onclick="currentSlide(3)">
                 </div>
                 <div class="column">
-                    <picture>
-                        <source srcset="build/img/destacada.webp" type="image/webp">
-                        <source srcset="build/img/destacada.jpg" type="image/jpeg">
-                        <img src="build/img/destacada.jpg" alt="Imagen de la propiedad" style="width:100%" onclick="currentSlide(4)">
-                    </picture>
+                    <img class="demo cursor" src="build/img/destacada.jpg" style="width:100%" onclick="currentSlide(4)">
                 </div>
                 <div class="column">
-                    <picture>
-                        <source srcset="build/img/destacada2.webp" type="image/webp">
-                        <source srcset="build/img/destacada2.jpg" type="image/jpeg">
-                        <img src="build/img/destacada2.jpg" alt="Imagen de la propiedad" style="width:100%" onclick="currentSlide(5)">
-                    </picture>
+                    <img class="demo cursor" src="build/img/destacada.jpg" style="width:100%" onclick="currentSlide(5)">
                 </div>
                 <div class="column">
-                    <picture>
-                        <source srcset="build/img/destacada3.webp" type="image/webp">
-                        <source srcset="build/img/destacada3.jpg" type="image/jpeg">
-                        <img src="build/img/destacada3.jpg" alt="Imagen de la propiedad" style="width:100%" onclick="currentSlide(6)">
-                    </picture>
+                    <img class="demo cursor" src="build/img/destacada.jpg" style="width:100%" onclick="currentSlide(6)">
                 </div>
             </div>
         </div>
@@ -198,6 +137,11 @@
                 maxime.
             </p>
         </div>
+
+        <div id="map">
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCassddZiBKdhOXC5f7CbJITS8naXOvdXM"> </script>
+        </div>
+
     </main>
 
 
@@ -220,6 +164,49 @@
     </footer>
 
     <script src="build/js/bundle.min.js"></script>
+
+    <script>
+        //galeria imagenes
+        var slideIndex = 1;
+        showSlides(slideIndex);
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        // Thumbnail image controls
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+            var i;
+            var slides = document.getElementsByClassName("mySlides-gallery");
+            var dots = document.getElementsByClassName("demo");
+            var captionText = document.getElementById("caption");
+            if (n > slides.length) { slideIndex = 1 }
+            if (n < 1) { slideIndex = slides.length }
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex - 1].style.display = "block";
+            dots[slideIndex - 1].className += " active";
+        }
+    </script>
+
+
+    <script>
+        var map_parameters = { center: { lat: 36.72639109069393, lng: -4.443076401628604 }, zoom: 17 };
+        var map = new google.maps.Map(document.getElementById('map'), map_parameters);
+        var marker = new google.maps.Marker({
+            position: {lat: 36.72639109069393, lng: -4.443076401628604},
+            map: map,
+            title: 'Hello World!'
+        });
+    </script>
 </body>
 
 </html>
