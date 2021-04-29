@@ -12,7 +12,7 @@
      h1 {
          color: $blanco;
      }
-    .formulario {
+    .formulario-login {
         label {
             font-weight: $bold;
             text-transform: uppercase;
@@ -47,4 +47,44 @@
         
     }
  }
+
+ .formulario-reserva {
+     background-color: $gris;
+     padding: 3rem;
+     border-radius: 1.5rem;
+
+     .reserva{
+         width: 100%;
+         display: flex;
+         justify-content: center;
+         label{
+            font-weight: $bold;
+            text-transform: uppercase;
+            display: block;
+         }
+         input:not([type='submit']) {
+             border: none;
+             width: 100%;
+             text-align: center;
+             height: 4rem;
+             border-radius: 1rem;
+             margin-bottom: 3rem;
+         }
+         div{
+             width: 50%;
+             margin-right: 2rem;
+             &:last-of-type {
+                margin-right: 0;
+            }
+         }
+         
+     }
+     .contenedor-boton-reserva {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+ }
+
+
     

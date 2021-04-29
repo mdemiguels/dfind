@@ -9,3 +9,7 @@
 .boton-verde {
     @include boton($verde, inline-block);
 }
+
+.boton-verde-block {
+    @include boton($verde, block);
+}

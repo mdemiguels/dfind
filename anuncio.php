@@ -1,59 +1,59 @@
-<?php include 'includes/templates/header.php'; ?>
+<?php
+
+require 'includes/funciones.php';
+
+incluirTemplate('header');
+
+?>
 
 <main class="contenedor seccion contenido-centrado">
     <h1>Titulo de anuncio</h1>
 
-    <div class="container">
 
-        <!-- Full-width images with number text -->
-        <div class="mySlides-gallery">
-            <img src="build/img/destacada.jpg" style="width:100%">
+    <!-- Full-width images with number text -->
+    <div class="mySlides-gallery">
+        <img src="build/img/anuncio1.jpg" style="width:100%">
+    </div>
+
+    <div class="mySlides-gallery">
+        <img src="build/img/anuncio2.jpg" style="width:100%">
+    </div>
+
+    <div class="mySlides-gallery">
+        <img src="build/img/anuncio3.jpg" style="width:100%">
+    </div>
+
+    <div class="mySlides-gallery">
+        <img src="build/img/anuncio4.jpg" style="width:100%">
+    </div>
+
+    <div class="mySlides-gallery">
+        <img src="build/img/anuncio5.jpg" style="width:100%">
+    </div>
+
+    <div class="mySlides-gallery">
+        <img src="build/img/anuncio6.jpg" style="width:100%">
+    </div>
+
+    <!-- Thumbnail images -->
+    <div class="row">
+        <div class="column">
+            <img class="demo cursor" src="build/img/anuncio1.jpg" style="width:100%" onclick="currentSlide(1)">
         </div>
-
-        <div class="mySlides-gallery">
-            <img src="build/img/destacada.jpg" style="width:100%">
+        <div class="column">
+            <img class="demo cursor" src="build/img/anuncio2.jpg" style="width:100%" onclick="currentSlide(2)">
         </div>
-
-        <div class="mySlides-gallery">
-            <img src="build/img/destacada.jpg" style="width:100%">
+        <div class="column">
+            <img class="demo cursor" src="build/img/anuncio3.jpg" style="width:100%" onclick="currentSlide(3)">
         </div>
-
-        <div class="mySlides-gallery">
-            <img src="build/img/destacada.jpg" style="width:100%">
+        <div class="column">
+            <img class="demo cursor" src="build/img/anuncio4.jpg" style="width:100%" onclick="currentSlide(4)">
         </div>
-
-        <div class="mySlides-gallery">
-            <img src="build/img/destacada.jpg" style="width:100%">
+        <div class="column">
+            <img class="demo cursor" src="build/img/anuncio5.jpg" style="width:100%" onclick="currentSlide(5)">
         </div>
-
-        <div class="mySlides-gallery">
-            <img src="build/img/destacada.jpg" style="width:100%">
-        </div>
-
-        <!-- Next and previous buttons -->
-        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-        <a class="next" onclick="plusSlides(1)">&#10095;</a>
-
-        <!-- Thumbnail images -->
-        <div class="row">
-            <div class="column">
-                <img class="demo cursor" src="build/img/destacada.jpg" style="width:100%" onclick="currentSlide(1)">
-            </div>
-            <div class="column">
-                <img class="demo cursor" src="build/img/destacada.jpg" style="width:100%" onclick="currentSlide(2)">
-            </div>
-            <div class="column">
-                <img class="demo cursor" src="build/img/destacada.jpg" style="width:100%" onclick="currentSlide(3)">
-            </div>
-            <div class="column">
-                <img class="demo cursor" src="build/img/destacada.jpg" style="width:100%" onclick="currentSlide(4)">
-            </div>
-            <div class="column">
-                <img class="demo cursor" src="build/img/destacada.jpg" style="width:100%" onclick="currentSlide(5)">
-            </div>
-            <div class="column">
-                <img class="demo cursor" src="build/img/destacada.jpg" style="width:100%" onclick="currentSlide(6)">
-            </div>
+        <div class="column">
+            <img class="demo cursor" src="build/img/anuncio6.jpg" style="width:100%" onclick="currentSlide(6)">
         </div>
     </div>
 
@@ -76,6 +76,7 @@
             </li>
         </ul>
 
+        <h2>Descripción</h2>
         <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni eaque consequatur blanditiis rerum, autem
             facere! Dolorum, doloremque! Recusandae commodi nemo temporibus tempore quisquam! Nostrum iure ducimus
@@ -96,14 +97,45 @@
         </p>
     </div>
 
-    <div id="map">
+    <h2>Ubicación</h2>
+    <div class="contenedor seccion" id="map">
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCassddZiBKdhOXC5f7CbJITS8naXOvdXM"> </script>
+    </div>
+
+    <h2>Reserva</h2>
+    <div class="contenedor seccion">
+        <form class="formulario-reserva" action="pago.php" method="POST">
+            <div class="reserva">
+                <div>
+                    <label for="date">Fecha inicio:</label>
+                    
+                    <input type="date" min="<?php echo date("Y-m-d"); ?>">
+                </div>
+
+                <div>
+                    <label for="date">Fecha fin:</label>
+                    <input type="date">
+                </div>
+            </div>
+            <div class="contenedor-boton-reserva">
+                <input class="boton-verde-block" type="submit" value="Reservar">
+            </div>
+
+
+        </form>
+    </div>
+
+    <h2>Comentarios</h2>
+    <div class="contenedor seccion">
+
     </div>
 
 </main>
 
 
-<?php include 'includes/templates/footer.php'; ?>
+<?php
+    incluirTemplate('footer');
+?>
 
 <script>
     //galeria imagenes
