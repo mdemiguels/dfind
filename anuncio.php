@@ -104,7 +104,7 @@ incluirTemplate('header');
 
     <h2>Reserva</h2>
     <div class="contenedor seccion">
-        <form class="formulario-reserva" action="pago.php" method="POST">
+        <form class="formulario formulario-reserva" action="pago.php" method="POST">
             <div class="reserva">
                 <div>
                     <label for="date">Fecha inicio:</label>

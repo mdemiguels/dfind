@@ -1,0 +1,16 @@
+.login {
+    background-image: linear-gradient(to right, $morado 0%, darken($morado, 7) 100%);
+    padding: 3rem;
+    border-radius: 1.5rem;
+    width: 80%;
+    margin: 8.1rem auto;
+
+    @include tablet {
+        width: 55%;
+   }
+
+    h1 {
+        color: $blanco;
+    }
+   
+}

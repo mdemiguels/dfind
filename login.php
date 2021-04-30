@@ -10,7 +10,7 @@ incluirTemplate('header');
 
     <div class="login">
         <h1>Iniciar sesión</h1>
-        <form class="formulario-login" action="index.php" method="POST">
+        <form class="formulario formulario-login" action="index.php" method="POST">
             <label for="email">E-mail</label>
             <input type="email" placeholder="Tu Email" id="email">
 
@@ -19,7 +19,7 @@ incluirTemplate('header');
 
             <div class="boton-login">
                 <input type="submit" value="Entrar" class="boton-amarillo">
-                <input type="submit" value="Registrarse" class="boton-verde">
+                <a href="registro.php" class="boton-verde">Resgistrarse</a>
             </div>
         </form>
     </div>

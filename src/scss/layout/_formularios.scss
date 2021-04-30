@@ -1,90 +1,90 @@
- .login {
-     background-image: linear-gradient(to right, $morado 0%, darken($morado, 7) 100%);
-     padding: 3rem;
-     border-radius: 1.5rem;
-     width: 80%;
-     margin: 8.1rem auto;
-
-     @include tablet {
-         width: 55%;
+.formulario {
+    p {
+        font-size: 1.4rem;
+        color: $grisOscuro;
+        margin: 2rem 0 0 0;
     }
 
-     h1 {
-         color: $blanco;
-     }
-    .formulario-login {
-        label {
-            font-weight: $bold;
-            text-transform: uppercase;
-            display: block;
-            color: $blanco;
-        }
+    legend {
+        font-size: 2rem;
+        color: $grisOscuro;
+    }
 
-        input:not([type='submit']) {
-            padding: 1rem;
-            display: block;
-            width: 100%;
-            background-color: $blanco;
-            border: 1px solid $gris;
-            border-radius: 1rem;
-            margin-bottom: 2rem;
-        }
-        .boton-login {
-            display: grid;
-            justify-content: center;
-            @include tablet {
-                display: flex;
-                justify-content: space-around;
-            }
-            
-            .boton-amarillo {
-                width: 15rem;
-            }
-            .boton-verde {
-                width: 15rem;
-            }
+    label {
+        font-weight: $bold;
+        text-transform: uppercase;
+        display: block;
+    }
+    input:not([type="submit"]), 
+    textarea,
+    select {
+        padding: 1rem;
+        display: block;
+        width: 100%;
+        background-color: $blanco;
+        border: 1px solid $gris;
+        border-radius: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    textarea {
+        height: 20rem;
+    }
+
+    .contenedor-imagenes{
+        @include grid(2, 2rem); 
+    }
+   
+}
+
+.formulario-login {
+    label {
+        color: $blanco;
+    }
+    .boton-login {
+        display: grid;
+        justify-content: center;
+        @include tablet {
+            display: flex;
+            justify-content: space-around;
         }
         
+        .boton-amarillo {
+            width: 15rem;
+        }
+        .boton-verde {
+            width: 15rem;
+        }
     }
- }
+    
+}
 
- .formulario-reserva {
-     background-color: $gris;
-     padding: 3rem;
-     border-radius: 1.5rem;
+.formulario-reserva {
+    background-color: $gris;
+    padding: 3rem;
+    border-radius: 1.5rem;
 
-     .reserva{
-         width: 100%;
-         display: flex;
-         justify-content: center;
-         label{
-            font-weight: $bold;
-            text-transform: uppercase;
-            display: block;
-         }
-         input:not([type='submit']) {
-             border: none;
-             width: 100%;
-             text-align: center;
-             height: 4rem;
-             border-radius: 1rem;
-             margin-bottom: 3rem;
-         }
-         div{
-             width: 50%;
-             margin-right: 2rem;
-             &:last-of-type {
-                margin-right: 0;
-            }
-         }
-         
-     }
-     .contenedor-boton-reserva {
+    .reserva{
         width: 100%;
         display: flex;
         justify-content: center;
+        div{
+            width: 50%;
+            margin-right: 2rem;
+            &:last-of-type {
+               margin-right: 0;
+           }
+        }
+        
     }
- }
+    .contenedor-boton-reserva {
+       width: 100%;
+       display: flex;
+       justify-content: center;
+   }
+}
 
+
+ 
 
     
