@@ -108,7 +108,7 @@ incluirTemplate('header');
             <div class="reserva">
                 <div>
                     <label for="date">Fecha inicio:</label>
-                    
+
                     <input type="date" min="<?php echo date("Y-m-d"); ?>">
                 </div>
 
@@ -134,7 +134,7 @@ incluirTemplate('header');
 
 
 <?php
-    incluirTemplate('footer');
+incluirTemplate('footer');
 ?>
 
 <script>

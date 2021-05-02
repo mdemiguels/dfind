@@ -184,7 +184,7 @@ incluirTemplate('header', $inicio = true);
 </div>
 
 <?php
-    incluirTemplate('footer');
+incluirTemplate('footer');
 ?>
 
 <script>

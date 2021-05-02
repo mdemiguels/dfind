@@ -1,11 +1,11 @@
 .alerta {
-    padding: .5rem;
-    text-align: center;
-    color: $blanco;
-    font-weight: $bold;
-    margin: 1rem 0;
+  padding: 0.5rem;
+  text-align: center;
+  color: $blanco;
+  font-weight: $bold;
+  margin: 1rem 0;
 
-    &.error {
-        background-color: $rojo;
-    }
+  &.error {
+    background-color: $rojo;
+  }
 }

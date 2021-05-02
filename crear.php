@@ -2,7 +2,7 @@
 
 require 'includes/config/database.php';
 
-$db = conectarDB();
+$db = conectarDB(); // Conexión con la Base de datos
 
 $errores = [];
 
@@ -18,18 +18,24 @@ $long = '';
 // Recepción de los datos del formulario
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    $errores = [];
+    $errores = []; // Reinicio de la variable errores
 
-    $titulo = $_POST["titulo"];
-    $precio = $_POST["precio"];
-    $descripcion = $_POST["descripcion"];
-    $habitaciones = $_POST["habitaciones"];
-    $aparcamiento = $_POST["aparcamiento"];
-    $wc = $_POST["wc"];
-    $lat = $_POST["latitud"];
-    $long = $_POST["longitud"];
+    $titulo = mysqli_real_escape_string($db, $_POST["titulo"]);
+    $precio = mysqli_real_escape_string($db, $_POST["precio"]);
+    $descripcion = mysqli_real_escape_string($db, $_POST["descripcion"]);
+    $habitaciones = mysqli_real_escape_string($db, $_POST["habitaciones"]);
+    $aparcamiento = mysqli_real_escape_string($db, $_POST["aparcamiento"]);
+    $wc = mysqli_real_escape_string($db, $_POST["wc"]);
+    $lat = mysqli_real_escape_string($db, $_POST["latitud"]);
+    $long = mysqli_real_escape_string($db, $_POST["longitud"]);
 
-    //Validación de formulario
+    // Obtener imagenes del formulario
+    $imagen = [];
+    for ($i = 1; $i <= count($_FILES); $i++) {
+        $imagen[] = $_FILES["imagen" . $i];
+    }
+
+    // Validación de formulario
     if (!$titulo) {
         $errores[] = "Debes añadir un título";
     }
@@ -50,6 +56,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if (!$lat || !$long) {
         $errores[] = "Los datos de ubicación son obligacorios";
+    }
+
+    if (!$imagen[0]["name"]) {
+        $errores[] = "Debes introducir al menos una imagen";
     }
 
     if (empty($errores)) {
@@ -81,7 +91,7 @@ incluirTemplate('header');
     }
     ?>
 
-    <form class="formulario" action="" method="POST">
+    <form class="formulario" action="crear.php" method="POST" enctype="multipart/form-data">
         <fieldset>
             <legend>Inforación alojamiento</legend>
 
@@ -93,12 +103,12 @@ incluirTemplate('header');
 
             <label>Imágenes</label>
             <div class="contenedor-imagenes">
-                <input type="file" accept="image/jpeg, image/png">
-                <input type="file" accept="image/jpeg, image/png">
-                <input type="file" accept="image/jpeg, image/png">
-                <input type="file" accept="image/jpeg, image/png">
-                <input type="file" accept="image/jpeg, image/png">
-                <input type="file" accept="image/jpeg, image/png">
+                <input type="file" name="imagen1" accept="image/jpeg, image/png">
+                <input type="file" name="imagen2" accept="image/jpeg, image/png">
+                <input type="file" name="imagen3" accept="image/jpeg, image/png">
+                <input type="file" name="imagen4" accept="image/jpeg, image/png">
+                <input type="file" name="imagen5" accept="image/jpeg, image/png">
+                <input type="file" name="imagen6" accept="image/jpeg, image/png">
             </div>
 
             <label for="descripcion">Descripción</label>

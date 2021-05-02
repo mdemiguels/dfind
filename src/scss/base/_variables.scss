@@ -1,8 +1,7 @@
-
-@import url('https://fonts.googleapis.com/css?family=Lato:300,400,700,900');
+@import url("https://fonts.googleapis.com/css?family=Lato:300,400,700,900");
 
 // Fuentes
-$fuente_principal: 'Lato', sans-serif;
+$fuente_principal: "Lato", sans-serif;
 
 // Tamaño de Media Queries
 $telefono: 480px;
@@ -11,20 +10,19 @@ $desktop: 1024px;
 
 // Colores
 $negro: #000000;
-$amarillo: #E08709;
-$verde: #71B100;
-$morado: #6C69FF;
-$blanco: #FFFFFF;
+$amarillo: #e08709;
+$verde: #71b100;
+$morado: #6c69ff;
+$blanco: #ffffff;
 $gris: #e1e1e1;
 $grisOscuro: #333333;
-$rojo:#ff2626;
-
+$rojo: #ff2626;
 
 $separacion: 5rem;
 
 // Fuentes
 
 $delgada: 300;
-$regular : 400;
+$regular: 400;
 $bold: 700;
-$black: 900
+$black: 900;

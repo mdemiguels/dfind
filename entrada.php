@@ -41,5 +41,5 @@ incluirTemplate('header');
 
 
 <?php
-    incluirTemplate('footer');
+incluirTemplate('footer');
 ?>

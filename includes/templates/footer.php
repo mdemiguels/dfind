@@ -11,8 +11,8 @@
 
     </div>
 
-    <?php 
-        $fecha = date('Y');
+    <?php
+    $fecha = date('Y');
     ?>
 
     <p class="copyright">Todos los Derechos Reservados <?php echo $fecha; ?> &copy;</p>
