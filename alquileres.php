@@ -5,7 +5,11 @@ require 'includes/config/database.php';
 $db = conectarDB(); // Conexión con la Base de datos
 
 // Extracción de datos de la tabla propiedad
-$query = "SELECT * FROM propiedad WHERE usuario_idusuario='" . $_SESSION["id"] . "';";
+$query = "SELECT p.*, i.imagen FROM propiedad p 
+          JOIN imagen i ON p.idpropiedad = i.propiedad_idpropiedad 
+          WHERE i.destacada = '1'";
+
+$resultado_select = mysqli_query($db, $query);
 
 $registrado = $_GET["registrado"] ?? null;
 
@@ -22,6 +26,8 @@ incluirTemplate('header');
         <p class="alerta exito">Alojamiento registrado con éxito</p>
     <?php endif; ?>
 
+    <a class="boton boton-verde" href="crear.php">Nueva propiedad</a>
+
     <table class="propiedades">
         <thead>
             <tr>
@@ -32,15 +38,18 @@ incluirTemplate('header');
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>Casita en la playa</td>
-                <td><img class="imagen-tabla" src="img_propiedades/baed21c31c0a89d3ceb08477a2f278e4.jpg" alt="Imagen alojamiento"></td>
-                <td>150</td>
-                <td>
-                    <a href="#"><img class="icono-tabla" src="build/img/papelera.svg" alt="Icono papelera" loading="lazy"></a>
-                    <a href="#"><img class="icono-tabla" src="build/img/update.svg" alt="Icono actualizar" loading="lazy"></a>
-                </td>
-            </tr>
+            <!-- Mostrar resultados en la tabla -->
+            <?php while ($propiedad = mysqli_fetch_assoc($resultado_select)) : ?>
+                <tr>
+                    <td><?php echo $propiedad["titulo"] ?></td>
+                    <td><img class="imagen-tabla" src="img_propiedades/<?php echo $propiedad["imagen"] ?>" alt="Imagen alojamiento"></td>
+                    <td><?php echo $propiedad["precio"] ?> €</td>
+                    <td>
+                        <a href="#"><img class="icono-tabla" src="build/img/update.svg" alt="Icono actualizar" loading="lazy"></a>
+                        <a href="#"><img class="icono-tabla" src="build/img/papelera.svg" alt="Icono papelera" loading="lazy"></a>
+                    </td>
+                </tr>
+            <?php endwhile; ?>
         </tbody>
     </table>
 
