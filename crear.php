@@ -116,7 +116,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     $resultado_insert = mysqli_query($db, $insert_imagenes);
                 }
             }
-            header('Location: alquileres.php?mensaje=Propiedad creada con éxito');
+            header('Location: alquileres.php?registrado=1');
         }
     }
 }

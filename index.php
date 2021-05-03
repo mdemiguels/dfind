@@ -134,7 +134,7 @@ incluirTemplate('header', $inicio = true);
 <section class="imagen-contacto">
     <h2>¿Necesitas ayuda?</h2>
     <p>Rellena el formulario de contacto y un administrador se pondrá en contacto contigo lo antes posible</p>
-    <a href="contacto.php" class="boton-amarillo">Contáctanos</a>
+    <a href="mailto:faq@dfind.com" class="boton-amarillo">Contáctanos</a>
 </section>
 
 <div class="contenedor seccion">

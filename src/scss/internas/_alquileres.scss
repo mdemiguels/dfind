@@ -1,0 +1,26 @@
+table.propiedades {
+  margin-top: 3rem;
+  border-spacing: 0;
+  width: 100%;
+  thead {
+    background-color: $morado;
+    th {
+      color: $blanco;
+      padding: 2rem;
+      font-weight: 700;
+    }
+  }
+
+  tbody {
+    text-align: center;
+    .imagen-tabla {
+      margin: 0 auto;
+      width: 10rem;
+    }
+    .icono-tabla {
+      display: inline;
+      margin: 0 auto;
+      width: 5rem;
+    }
+  }
+}
