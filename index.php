@@ -1,4 +1,6 @@
 <?php
+require 'includes/config/database.php';
+$db = conectarDB();
 
 require 'includes/funciones.php';
 

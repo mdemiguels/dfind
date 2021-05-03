@@ -8,6 +8,7 @@ $errores = [];
 
 $titulo = '';
 $precio = '';
+$imagenes = [];
 $descripcion = '';
 $habitaciones = '';
 $aparcamiento = '';
@@ -30,9 +31,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $long = mysqli_real_escape_string($db, $_POST["longitud"]);
 
     // Obtener imagenes del formulario
-    $imagen = [];
     for ($i = 1; $i <= count($_FILES); $i++) {
-        $imagen[] = $_FILES["imagen" . $i];
+        $imagenes[] = $_FILES["imagen" . $i];
     }
 
     // Validación de formulario
@@ -42,6 +42,29 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (!$precio) {
         $errores[] = "El campo de precio es obligatorio";
     }
+
+    // Comprobación de que se haya subido al menos 1 imagen y que no pese más de 1.5MB
+    $tamanio = 1000000 * 1.5;
+    $flag_name = false;
+    $flag_tamanio = false;
+
+    foreach ($imagenes as $imagen) {
+        if ($imagen["name"]) {
+            $flag_name = true;
+        }
+        if ($imagen["size"] > $tamanio) {
+            $flag_tamanio = true;
+        }
+    }
+
+    if (!$flag_name) {
+        $errores[] = "Debe introducir al menos una imagen";
+    }
+
+    if ($flag_tamanio) {
+        $errores[] = "El tamaño de las imagenes no debe ser mayor de 1.5MB";
+    }
+
     if (strlen($descripcion) < 50) {
         $errores[] = "Debes añadir una descripción detallada de la vivienda de al menos 50 caracteres";
     }
@@ -58,18 +81,42 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $errores[] = "Los datos de ubicación son obligacorios";
     }
 
-    if (!$imagen[0]["name"]) {
-        $errores[] = "Debes introducir al menos una imagen";
-    }
+
 
     if (empty($errores)) {
-        $query = "INSERT INTO propiedad(titulo, precio, descripcion, habitaciones, wc, estacionamiento, latitud, longitud) 
-                VALUES('$titulo', '$precio', '$descripcion', '$habitaciones', '$wc', '$estacionamiento', '$latitud', '$longitud');";
 
-        $resultado = mysqli_query($db, $query);
+        $insert_propiedad = "INSERT INTO propiedad(titulo, precio, descripcion, habitaciones, wc, estacionamiento, latitud, longitud)
+        VALUES('$titulo', '$precio', '$descripcion', '$habitaciones', '$wc', '$aparcamiento', '$lat', '$long');";
+        $resultado_insert = mysqli_query($db, $insert_propiedad);
 
-        if ($resultado) {
-            echo '<script type="text/javascript">alert("Datos insertados correctamente."); window.location.href="alquileres.php";</script>';
+        if ($resultado_insert) {
+            $select_id = "SELECT idpropiedad FROM propiedad WHERE latitud = '$lat' AND longitud = '$long'";
+            $resultado_select = mysqli_query($db, $select_id);
+
+            if ($idpropiedad = mysqli_fetch_assoc($resultado_select)) {
+                $idpropiedad = $idpropiedad["idpropiedad"];
+            }
+            // Subida de imágenes al servidor
+
+            // Crear carpeta Imagenes
+            $dir_imagenes = "img_propiedades/";
+            if (!is_dir($dir_imagenes)) {
+                mkdir($dir_imagenes);
+            }
+
+            // Generar un nombre único
+            foreach ($imagenes as $imagen) {
+                $ruta_destino = md5(uniqid(rand(), true)) . ".jpg";
+                if ($imagen["name"]) {
+                    move_uploaded_file($imagen["tmp_name"], $dir_imagenes . $ruta_destino);
+
+                    $insert_imagenes = "INSERT INTO imagen(propiedad_idpropiedad, imagen) 
+                    VALUES('$idpropiedad', '$ruta_destino');";
+
+                    $resultado_insert = mysqli_query($db, $insert_imagenes);
+                }
+            }
+            header('Location: alquileres.php?mensaje=Propiedad creada con éxito');
         }
     }
 }
