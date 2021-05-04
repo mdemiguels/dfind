@@ -15,7 +15,6 @@ incluirTemplate('header');
 ?>
 
 <main class="contenedor seccion">
-    <h1>Registro</h1>
 
     <div class="login">
         <h1>Formulario de registro</h1>

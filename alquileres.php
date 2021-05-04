@@ -45,7 +45,7 @@ incluirTemplate('header');
                     <td><img class="imagen-tabla" src="img_propiedades/<?php echo $propiedad["imagen"] ?>" alt="Imagen alojamiento"></td>
                     <td><?php echo $propiedad["precio"] ?> €</td>
                     <td>
-                        <a href="#"><img class="icono-tabla" src="build/img/update.svg" alt="Icono actualizar" loading="lazy"></a>
+                        <a href="actualizar.php"><img class="icono-tabla" src="build/img/update.svg" alt="Icono actualizar" loading="lazy"></a>
                         <a href="#"><img class="icono-tabla" src="build/img/papelera.svg" alt="Icono papelera" loading="lazy"></a>
                     </td>
                 </tr>
