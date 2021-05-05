@@ -65,8 +65,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $errores[] = "El tamaño de las imagenes no debe ser mayor de 1.5MB";
     }
 
-    if (strlen($descripcion) < 50) {
-        $errores[] = "Debes añadir una descripción detallada de la vivienda de al menos 50 caracteres";
+    if (strlen($descripcion) < 200 && strlen($descripcion) > 220) {
+        $errores[] = "Debes añadir una descripción detallada de la vivienda de entre 150 y 320 caracteres";
     }
 
     if (!$habitaciones) {
@@ -105,13 +105,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             }
 
             // Generar un nombre único
-            foreach ($imagenes as $imagen) {
+            $flag = false;
+            for ($i = 0; $i < count($imagenes); $i++) {
                 $ruta_destino = md5(uniqid(rand(), true)) . ".jpg";
-                if ($imagen["name"]) {
-                    move_uploaded_file($imagen["tmp_name"], $dir_imagenes . $ruta_destino);
+                if ($imagenes[$i]["name"]) {
+                    move_uploaded_file($imagenes[$i]["tmp_name"], $dir_imagenes . $ruta_destino);
 
-                    $insert_imagenes = "INSERT INTO imagen(propiedad_idpropiedad, imagen) 
-                    VALUES('$idpropiedad', '$ruta_destino');";
+                    $destacada = 0;
+                    if (!$flag) {
+                        $destacada = 1;
+                        $flag = true;
+                    }
+
+                    $insert_imagenes = "INSERT INTO imagen(propiedad_idpropiedad, imagen, destacada) 
+                    VALUES($idpropiedad, '$ruta_destino', $destacada);";
 
                     $resultado_insert = mysqli_query($db, $insert_imagenes);
                 }

@@ -1,20 +1,32 @@
 <?php
 
+$id = $_GET["id"];
+
+// Validar URL
+if (!filter_var($id, FILTER_VALIDATE_INT)) {
+    header("Location: alquileres.php");
+}
+
 require 'includes/config/database.php';
 
 $db = conectarDB(); // Conexión con la Base de datos
 
+// Obtener datos de la propiedad
+$consulta = "SELECT * FROM propiedad WHERE idpropiedad = $id;";
+$resultado = mysqli_query($db, $consulta);
+$propiedad = mysqli_fetch_assoc($resultado);
+
 $errores = [];
 
-$titulo = '';
-$precio = '';
+$titulo = $propiedad["titulo"];
+$precio = $propiedad["precio"];
 $imagenes = [];
-$descripcion = '';
-$habitaciones = '';
-$aparcamiento = '';
-$wc = '';
-$lat = '';
-$long = '';
+$descripcion = $propiedad["descripcion"];
+$habitaciones = $propiedad["habitaciones"];
+$aparcamiento = $propiedad["estacionamiento"];
+$wc = $propiedad["wc"];
+$lat = $propiedad["latitud"];
+$long = $propiedad["longitud"];
 
 // Recepción de los datos del formulario
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -49,24 +61,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $flag_tamanio = false;
 
     foreach ($imagenes as $imagen) {
-        if ($imagen["name"]) {
-            $flag_name = true;
-        }
         if ($imagen["size"] > $tamanio) {
             $flag_tamanio = true;
         }
-    }
-
-    if (!$flag_name) {
-        $errores[] = "Debe introducir al menos una imagen";
     }
 
     if ($flag_tamanio) {
         $errores[] = "El tamaño de las imagenes no debe ser mayor de 1.5MB";
     }
 
-    if (strlen($descripcion) < 50) {
-        $errores[] = "Debes añadir una descripción detallada de la vivienda de al menos 50 caracteres";
+    if (strlen($descripcion) < 200 && strlen($descripcion) > 220) {
+        $errores[] = "Debes añadir una descripción detallada de la vivienda de entre 150 y 320 caracteres";
     }
 
     if (!$habitaciones) {
@@ -81,21 +86,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $errores[] = "Los datos de ubicación son obligacorios";
     }
 
-
-
     if (empty($errores)) {
 
-        $insert_propiedad = "INSERT INTO propiedad(titulo, precio, descripcion, habitaciones, wc, estacionamiento, latitud, longitud)
-        VALUES('$titulo', '$precio', '$descripcion', '$habitaciones', '$wc', '$aparcamiento', '$lat', '$long');";
-        $resultado_insert = mysqli_query($db, $insert_propiedad);
+        $update_propiedad = "UPDATE propiedad SET titulo='$titulo', precio=$precio, descripcion='$descripcion', 
+                            habitaciones=$habitaciones, wc=$wc, estacionamiento=$aparcamiento, latitud=$lat, longitud=$long 
+                            WHERE idpropiedad = $id;";
+        $resultado_update = mysqli_query($db, $update_propiedad);
 
-        if ($resultado_insert) {
-            $select_id = "SELECT idpropiedad FROM propiedad WHERE latitud = '$lat' AND longitud = '$long'";
-            $resultado_select = mysqli_query($db, $select_id);
-
-            if ($idpropiedad = mysqli_fetch_assoc($resultado_select)) {
-                $idpropiedad = $idpropiedad["idpropiedad"];
-            }
+        if ($resultado_update) {
             // Subida de imágenes al servidor
 
             // Crear carpeta Imagenes
@@ -103,21 +101,43 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             if (!is_dir($dir_imagenes)) {
                 mkdir($dir_imagenes);
             }
-
             // Generar un nombre único
-            foreach ($imagenes as $imagen) {
-                $ruta_destino = md5(uniqid(rand(), true)) . ".jpg";
-                if ($imagen["name"]) {
-                    move_uploaded_file($imagen["tmp_name"], $dir_imagenes . $ruta_destino);
+            $flag_destacado = false;
+            $flag_eliminar = false;
 
-                    $insert_imagenes = "INSERT INTO imagen(propiedad_idpropiedad, imagen) 
-                    VALUES('$idpropiedad', '$ruta_destino');";
+            for ($i = 0; $i < count($imagenes); $i++) {
+                $ruta_destino = md5(uniqid(rand(), true)) . ".jpg";
+                if ($imagenes[$i]["name"]) {
+
+                    // Elimina las imagenes antiguas
+                    if (!$flag_destacado) {
+                        $select_imagenes = "SELECT imagen FROM imagen WHERE propiedad_idpropiedad=$id;";
+                        $resultado_select = mysqli_query($db, $select_imagenes);
+                        while ($imagen = mysqli_fetch_assoc($resultado_select)) {
+                            unlink($dir_imagenes . $imagen["imagen"]);
+                        }
+                        $delete_imagenes = "DELETE FROM imagen WHERE propiedad_idpropiedad=$id;";
+                        $resultado_delete = mysqli_query($db, $delete_imagenes);
+
+                        $flag_eliminar = true;
+                    }
+
+                    move_uploaded_file($imagenes[$i]["tmp_name"], $dir_imagenes . $ruta_destino);
+
+                    $destacada = 0;
+                    if (!$flag_destacado) {
+                        $destacada = 1;
+                        $flag_destacado = true;
+                    }
+
+                    $insert_imagenes = "INSERT INTO imagen(propiedad_idpropiedad, imagen, destacada) 
+                    VALUES($id, '$ruta_destino', $destacada);";
 
                     $resultado_insert = mysqli_query($db, $insert_imagenes);
                 }
             }
-            header('Location: alquileres.php?registrado=1');
         }
+        header('Location: alquileres.php?actualizado=1');
     }
 }
 
@@ -128,7 +148,7 @@ incluirTemplate('header');
 ?>
 
 <main class="contenedor seccion">
-    <h1>Crear alojamiento</h1>
+    <h1>Actualizar alojamiento</h1>
 
     <?php
     foreach ($errores as $error) {
@@ -138,7 +158,7 @@ incluirTemplate('header');
     }
     ?>
 
-    <form class="formulario" action="crear.php" method="POST" enctype="multipart/form-data">
+    <form class="formulario" method="POST" enctype="multipart/form-data">
         <fieldset>
             <legend>Inforación alojamiento</legend>
 
@@ -186,7 +206,7 @@ incluirTemplate('header');
 
         </fieldset>
 
-        <input type="submit" value="Crear" class="boton-verde">
+        <input type="submit" value="Actualizar Propiedad" class="boton-verde">
 
     </form>
 </main>
