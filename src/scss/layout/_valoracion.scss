@@ -30,11 +30,11 @@
 
   label:hover,
   label:hover ~ label {
-    color: orange;
+    color: $amarillo;
   }
 
   input[type="radio"]:checked ~ label {
-    color: orange;
+    color: $amarillo;
   }
 
   textarea {

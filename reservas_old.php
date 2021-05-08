@@ -16,7 +16,7 @@ $db = conectarDB(); // Conexión con la Base de datos
 $query = "SELECT p.*, r.*, i.* FROM propiedad p
         JOIN imagen i ON i.propiedad_idpropiedad = p.idpropiedad 
         JOIN reserva r ON p.idpropiedad = r.propiedad_idpropiedad 
-        WHERE r.usuario_idusuario = 2 AND i.destacada = 1 AND r.fecha_inicio>now()
+        WHERE r.usuario_idusuario = 2 AND i.destacada = 1 AND r.fecha_inicio<now()
         ORDER BY r.fecha_inicio DESC;";
 
 $resultado_select = mysqli_query($db, $query);
@@ -26,38 +26,24 @@ $actualizado = $_GET["actualizado"] ?? null;
 $eliminado = $_GET["eliminado"] ?? null;
 $comentado = $_GET["comentado"] ?? null;
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-
-    $id = $_POST["id"];
-    $id = filter_var($id, FILTER_VALIDATE_INT);
-    
-    if ($id) {
-        // Eliminar propiedad
-        $delete_propiedad = "DELETE FROM reserva WHERE idreserva=$id;";
-        $resultado_delete = mysqli_query($db, $delete_propiedad);
-
-        if ($resultado_delete) {
-            header("Location: reservas.php?eliminado=1");
-        }
-    }
-}
+$date = strtotime(date("d-m-Y"));
 
 incluirTemplate('header');
 
 ?>
 
 <main class="contenedor seccion viewheight">
-    <h1>Reservas actuales</h1>
+    <h1>Reservas pasadas</h1>
 
     <?php if (intval($registrado) === 1) : ?>
         <p class="alerta exito">Reserva registrada con éxito</p>
     <?php endif; ?>
 
-    <?php if (intval($eliminado) === 1) : ?>
-        <p class="alerta exito">Reserva eliminada con éxito</p>
+    <?php if (intval($comentado) === 1) : ?>
+        <p class="alerta exito">Comentario creado con éxito</p>
     <?php endif; ?>
 
-    <a class="boton boton-verde" href="reservas_old.php">Historial de reservas</a>
+    <a class="boton boton-verde" href="reservas.php">Reservas actuales</a>
 
     <table class="propiedades">
         <thead>
@@ -90,10 +76,15 @@ incluirTemplate('header');
                         <td><?php echo $fecha_fin ?></td>
                         <td>
                             <div class="acciones">
-                                <form method="POST">
-                                    <input type="hidden" name="id" value="<?php echo $reserva["idreserva"] ?>">
-                                    <input class="icono-tabla" type="image" src="build/img/papelera.svg" alt="Icono papelera" loading="lazy">
-                                </form>
+                                <?php
+                                $fecha_inicio = strtotime($fecha_inicio);
+                                $fecha_fin = strtotime($fecha_fin);
+
+                                if ($fecha_fin < $date) :
+                                ?>
+                                    <a href="valoracion.php?id=<?php echo $reserva["idreserva"]; ?>"><img class="icono-tabla" src="build/img/opinion.svg" alt="Icono actualizar" loading="lazy"></a>
+
+                                <?php endif; ?>
                             </div>
                         </td>
                     </tr>
