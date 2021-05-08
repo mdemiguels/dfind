@@ -18,9 +18,12 @@ table.propiedades {
       width: 10rem;
     }
     .icono-tabla {
-      display: inline;
       margin: 0 auto;
       width: 5rem;
+    }
+    .acciones {
+      display: flex;
+      justify-content: center;
     }
     td {
       padding: 1rem;

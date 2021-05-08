@@ -1,7 +1,8 @@
 <?php
+require 'includes/funciones.php';
 
-session_start();
-$auth =$_SESSION["login"];
+$auth = isAuth();
+
 if (!$auth) {
     header("Location: /dfind/");
 }
@@ -146,8 +147,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         header('Location: alquileres.php?actualizado=1');
     }
 }
-
-require 'includes/funciones.php';
 
 incluirTemplate('header');
 

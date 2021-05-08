@@ -1,7 +1,9 @@
 <?php
 
-session_start();
-$auth =$_SESSION["login"];
+require 'includes/funciones.php';
+
+$auth = isAuth();
+
 if (!$auth) {
     header("Location: /dfind/");
 }
@@ -91,8 +93,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if (empty($errores)) {
 
-        $insert_propiedad = "INSERT INTO propiedad(titulo, precio, descripcion, habitaciones, wc, estacionamiento, latitud, longitud)
-        VALUES('$titulo', '$precio', '$descripcion', '$habitaciones', '$wc', '$aparcamiento', '$lat', '$long');";
+        $insert_propiedad = "INSERT INTO propiedad(usuario_idusuario, titulo, precio, descripcion, habitaciones, wc, estacionamiento, latitud, longitud)
+        VALUES(". $_SESSION["id"] ."'$titulo', '$precio', '$descripcion', '$habitaciones', '$wc', '$aparcamiento', '$lat', '$long');";
         $resultado_insert = mysqli_query($db, $insert_propiedad);
 
         if ($resultado_insert) {
@@ -133,8 +135,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     }
 }
-
-require 'includes/funciones.php';
 
 incluirTemplate('header');
 

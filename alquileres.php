@@ -1,7 +1,9 @@
 <?php
 
-session_start();
-$auth =$_SESSION["login"];
+require 'includes/funciones.php';
+
+$auth = isAuth();
+
 if (!$auth) {
     header("Location: /dfind/");
 }
@@ -13,7 +15,7 @@ $db = conectarDB(); // Conexión con la Base de datos
 // Extracción de datos de la tabla propiedad
 $query = "SELECT p.*, i.imagen FROM propiedad p 
           JOIN imagen i ON p.idpropiedad = i.propiedad_idpropiedad 
-          WHERE i.destacada = '1'";
+          WHERE p.usuario_idusuario=" . $_SESSION['id'] . " AND i.destacada = 1";
 
 $resultado_select = mysqli_query($db, $query);
 
@@ -29,8 +31,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $select = "SELECT imagen FROM imagen WHERE propiedad_idpropiedad=$id;";
         $resultado_select = mysqli_query($db, $select);
 
-        while($imagen = mysqli_fetch_assoc($resultado_select)) {
-            unlink("img_propiedades/".$imagen["imagen"]);
+        while ($imagen = mysqli_fetch_assoc($resultado_select)) {
+            unlink("img_propiedades/" . $imagen["imagen"]);
         }
 
         $delete_imagenes = "DELETE FROM imagen WHERE propiedad_idpropiedad=$id";
@@ -45,8 +47,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     }
 }
-
-require 'includes/funciones.php';
 
 incluirTemplate('header');
 
@@ -86,11 +86,13 @@ incluirTemplate('header');
                     <td><img class="imagen-tabla" src="img_propiedades/<?php echo $propiedad["imagen"] ?>" alt="Imagen alojamiento"></td>
                     <td><?php echo $propiedad["precio"] ?> €</td>
                     <td>
-                        <a href="actualizar.php?id=<?php echo $propiedad["idpropiedad"]; ?>"><img class="icono-tabla" src="build/img/update.svg" alt="Icono actualizar" loading="lazy"></a>
-                        <form method="POST">
-                            <input type="hidden" name="id" value="<?php echo $propiedad["idpropiedad"] ?>">
-                            <input class="icono-tabla" type="image" src="build/img/papelera.svg" alt="Icono papelera" loading="lazy">
-                        </form>
+                        <div class="acciones">
+                            <a href="actualizar.php?id=<?php echo $propiedad["idpropiedad"]; ?>"><img class="icono-tabla" src="build/img/update.svg" alt="Icono actualizar" loading="lazy"></a>
+                            <form method="POST">
+                                <input type="hidden" name="id" value="<?php echo $propiedad["idpropiedad"] ?>">
+                                <input class="icono-tabla" type="image" src="build/img/papelera.svg" alt="Icono papelera" loading="lazy">
+                            </form>
+                        </div>
                     </td>
                 </tr>
             <?php endwhile; ?>
