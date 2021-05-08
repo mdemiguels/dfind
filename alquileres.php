@@ -80,7 +80,12 @@ incluirTemplate('header');
         </thead>
         <tbody>
             <!-- Mostrar resultados en la tabla -->
-            <?php while ($propiedad = mysqli_fetch_assoc($resultado_select)) : ?>
+            <?php 
+            if ($resultado_select->num_rows === 0) {
+                echo "<td colspan=6>Actualmente no tiene ninguna propiedad</td>";
+            }else {
+                while ($propiedad = mysqli_fetch_assoc($resultado_select)) : 
+            ?>
                 <tr>
                     <td><?php echo $propiedad["titulo"] ?></td>
                     <td><img class="imagen-tabla" src="img_propiedades/<?php echo $propiedad["imagen"] ?>" alt="Imagen alojamiento"></td>
@@ -95,7 +100,7 @@ incluirTemplate('header');
                         </div>
                     </td>
                 </tr>
-            <?php endwhile; ?>
+            <?php endwhile;} ?>
         </tbody>
     </table>
 

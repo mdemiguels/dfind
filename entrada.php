@@ -10,9 +10,9 @@ incluirTemplate('header');
     <h1>Titulo de post de blog</h1>
 
     <picture>
-        <source srcset="build/img/destacada2.webp" type="image/webp">
-        <source srcset="build/img/destacada2.jpg" type="image/jpeg">
-        <img src="build/img/destacada.jpg" alt="Imagen de la propiedad" loading="lazy">
+        <source srcset="build/img/blog2.webp" type="image/webp">
+        <source srcset="build/img/blog2.jpg" type="image/jpeg">
+        <img src="build/img/blog2.jpg" alt="Imagen de la propiedad" loading="lazy">
     </picture>
 
     <p class="informacion-meta">Escrito el: <span>20/10/2021</span> por: <span>Admin</span></p>

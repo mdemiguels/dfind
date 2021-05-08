@@ -2,6 +2,9 @@
   margin-top: $separacion/2;
   margin-bottom: $separacion/2;
 }
+.viewheight {
+  min-height: 1vh;
+}
 .contenido-centrado {
   max-width: 100rem;
 }

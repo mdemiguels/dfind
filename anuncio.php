@@ -17,6 +17,8 @@ $propiedad = mysqli_fetch_assoc($result);
 
 $select = "SELECT * FROM imagen WHERE propiedad_idpropiedad = $id ORDER BY destacada DESC;";
 $result = mysqli_query($db, $select);
+$select2 = "SELECT * FROM imagen WHERE propiedad_idpropiedad = $id ORDER BY destacada DESC;";
+$result2 = mysqli_query($db, $select2);
 $cont = 1;
 
 require 'includes/funciones.php';
@@ -34,17 +36,22 @@ incluirTemplate('header');
         <div class="mySlides-gallery">
             <img src="img_propiedades/<?php echo $imagen["imagen"]; ?>" style="width:100%">
         </div>
+    <?php
+    endwhile;
+    ?>
 
-        <!-- Thumbnail images -->
-        <div class="row">
+    <!-- Thumbnail images -->
+    <div class="row">
+        <?php while ($imagen = mysqli_fetch_assoc($result2)) : ?>
             <div class="column">
                 <img class="demo cursor" src="img_propiedades/<?php echo $imagen["imagen"]; ?>" style="width:100%" onclick="currentSlide(<?php echo $cont; ?>)">
             </div>
-        </div>
-    <?php
+        <?php
         $cont++;
-    endwhile;
-    ?>
+        endwhile;
+        ?>
+    </div>
+
 
     <div class="resumen-propiedad">
         <p class="precio">
@@ -78,7 +85,7 @@ incluirTemplate('header');
 
     <h2>Reserva</h2>
     <div class="contenedor seccion">
-        <form class="formulario formulario-reserva" action="pago.php" method="POST">
+        <form class="formulario formulario-reserva" method="POST">
             <div class="reserva">
                 <div>
                     <label for="date">Fecha inicio:</label>
@@ -88,7 +95,7 @@ incluirTemplate('header');
 
                 <div>
                     <label for="date">Fecha fin:</label>
-                    <input type="date">
+                    <input type="date" min="<?php echo date("Y-m-d"); ?>">
                 </div>
             </div>
             <div class="contenedor-boton-reserva">
@@ -101,7 +108,7 @@ incluirTemplate('header');
 
     <h2>Comentarios</h2>
     <div class="contenedor seccion">
-        
+
     </div>
 
 </main>
