@@ -1,4 +1,9 @@
 <?php
+session_start();
+$auth =$_SESSION["login"];
+if (!$auth) {
+    header("Location: /dfind/");
+}
 
 require 'includes/config/database.php';
 

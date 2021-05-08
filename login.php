@@ -30,6 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if ($auth) {
             session_start();
 
+            $_SESSION["login"] = true;
             $_SESSION["id"] = $usuario["idusuario"];
             $_SESSION["nombre"] = $usuario["nombre"];
             $_SESSION["email"] = $usuario["correo"];
