@@ -81,7 +81,7 @@ incluirTemplate('header');
                     <tr>
                         <td><?php echo $reserva["titulo"] ?></td>
                         <td><img class="imagen-tabla" src="img_propiedades/<?php echo $reserva["imagen"] ?>" alt="Imagen alojamiento"></td>
-                        <td><?php echo $reserva["precio"] ?> €</td>
+                        <td><?php echo $reserva["precio_total"] ?> €</td>
                         <?php
                         $fecha_inicio = date_format(date_create($reserva["fecha_inicio"]), "d-m-Y");
                         $fecha_fin = date_format(date_create($reserva["fecha_fin"]), "d-m-Y");

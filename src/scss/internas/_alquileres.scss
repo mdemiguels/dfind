@@ -1,6 +1,8 @@
 table.propiedades {
   margin-top: 3rem;
+  margin-bottom: 19.9rem;
   border-spacing: 0;
+  border: 1px solid $gris;
   width: 100%;
   thead {
     background-color: $morado;
@@ -27,6 +29,7 @@ table.propiedades {
     }
     td {
       padding: 1rem;
+      border: 1px solid $gris;
     }
   }
 }

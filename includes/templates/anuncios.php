@@ -10,7 +10,7 @@
                     } 
                     ?>
                     <p><?php echo $propiedad["descripcion"] ?></p>
-                    <p class="precio"><?php echo $propiedad["precio"] ?> €</p>
+                    <p class="precio"><?php echo $propiedad["precio"] ?> € / por día</p>
                     <ul class="iconos-caracteristicas">
                         <li>
                             <img class="icono" src="build/img/icono_wc.svg" alt="Icono wc" loading="lazy">

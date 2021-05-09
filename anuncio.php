@@ -1,38 +1,103 @@
 <?php
 
+require 'includes/funciones.php';
+
+$auth = isAuth();
+
 require 'includes/config/database.php';
+
+$errores = [];
 
 $db = conectarDB();
 
 $id = $_GET["id"];
 
-$select = "SELECT * FROM propiedad WHERE idpropiedad = $id;";
-$result = mysqli_query($db, $select);
-if (!$result->num_rows) {
+$select_propiedad = "SELECT * FROM propiedad WHERE idpropiedad = $id;";
+$result_propiedad = mysqli_query($db, $select_propiedad);
+if (!$result_propiedad->num_rows) {
     header("Location: /dfind/");
 }
-$propiedad = mysqli_fetch_assoc($result);
+$propiedad = mysqli_fetch_assoc($result_propiedad);
 
+$select_imagenes = "SELECT * FROM imagen WHERE propiedad_idpropiedad = $id ORDER BY destacada DESC;";
+$result_imagenes = mysqli_query($db, $select_imagenes);
 
-
-$select = "SELECT * FROM imagen WHERE propiedad_idpropiedad = $id ORDER BY destacada DESC;";
-$result = mysqli_query($db, $select);
-$select2 = "SELECT * FROM imagen WHERE propiedad_idpropiedad = $id ORDER BY destacada DESC;";
-$result2 = mysqli_query($db, $select2);
+$select_imagenes2 = "SELECT * FROM imagen WHERE propiedad_idpropiedad = $id ORDER BY destacada DESC;";
+$result_imagenes2 = mysqli_query($db, $select_imagenes2);
 $cont = 1;
 
-require 'includes/funciones.php';
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+    if ($auth) {
+        $errores = [];
+
+        if (!$_POST["fecha_inicio"] || !$_POST["fecha_fin"]) {
+            $errores[] = "Debe introducir una fecha";
+        } else {
+            $fecha_inicio = $_POST["fecha_inicio"];
+            $fecha_inicio_compare = strtotime($fecha_inicio);
+            $fecha_fin = $_POST["fecha_fin"];
+            $fecha_fin_compare = strtotime($fecha_fin);
+
+            if ($fecha_inicio > $fecha_fin) {
+                $errores[] = "La fecha de fin debe ser mayor que la de inicio";
+            } else {
+                $select_reservas = "SELECT * FROM reserva WHERE propiedad_idpropiedad = $id";
+                $result_reservas = mysqli_query($db, $select_reservas);
+                
+                $flag = false;
+                while ($reserva = mysqli_fetch_assoc($result_reservas)) {
+                    $rfecha_inicio = strtotime($reserva["fecha_inicio"]);
+                    $rfecha_fin = strtotime($reserva["fecha_fin"]);
+
+                    if (($fecha_inicio_compare >= $rfecha_inicio) && ($fecha_inicio_compare <= $rfecha_fin)) {
+                        $errores[] = "La fecha de inicio introducida no está disponible";
+                        $flag = true;
+                    }
+                    if (($fecha_fin_compare >= $rfecha_inicio) && ($fecha_fin_compare <= $rfecha_fin)) {
+                        $errores[] = "La fecha de fin introducida no está disponible";
+                        $flag = true;
+                    }
+                }
+                if (empty($errores)) {
+                    $date1 = new DateTime($fecha_inicio);
+                    $date2 = new DateTime($fecha_fin);
+                    $diff = $date1->diff($date2);
+                    $dias = $diff->days;
+
+                    $insert_reserva = "INSERT INTO reserva (propiedad_idpropiedad, usuario_idusuario, fecha_inicio, fecha_fin, precio_total)
+                                   VALUES ($id," . $_SESSION['id'] . ", '$fecha_inicio', '$fecha_fin', " . $propiedad["precio"] * $dias . ");";
+                    $result_insert = mysqli_query($db, $insert_reserva);
+
+                    if ($result_insert) {
+                        header("Location: reservas.php?registrado=1");
+                    }
+                }
+            }
+        }
+    } else {
+        echo '<script type="text/javascript">alert("Para reservar una propiedad debe iniciar sesión.");
+              window.location.href="login.php";</script>';
+    }
+}
 
 incluirTemplate('header');
 
 ?>
 
 <main class="contenedor seccion contenido-centrado">
+    <?php
+    foreach ($errores as $error) {
+        echo "<div class='alerta error'>";
+        echo $error;
+        echo "</div>";
+    }
+    ?>
     <h1><?php echo $propiedad["titulo"]; ?></h1>
 
 
     <!-- Full-width images with number text -->
-    <?php while ($imagen = mysqli_fetch_assoc($result)) : ?>
+    <?php while ($imagen = mysqli_fetch_assoc($result_imagenes)) : ?>
         <div class="mySlides-gallery">
             <img src="img_propiedades/<?php echo $imagen["imagen"]; ?>" style="width:100%">
         </div>
@@ -42,12 +107,12 @@ incluirTemplate('header');
 
     <!-- Thumbnail images -->
     <div class="row">
-        <?php while ($imagen = mysqli_fetch_assoc($result2)) : ?>
+        <?php while ($imagen = mysqli_fetch_assoc($result_imagenes2)) : ?>
             <div class="column">
                 <img class="demo cursor" src="img_propiedades/<?php echo $imagen["imagen"]; ?>" style="width:100%" onclick="currentSlide(<?php echo $cont; ?>)">
             </div>
         <?php
-        $cont++;
+            $cont++;
         endwhile;
         ?>
     </div>
@@ -55,7 +120,7 @@ incluirTemplate('header');
 
     <div class="resumen-propiedad">
         <p class="precio">
-            <?php echo $propiedad["precio"]; ?> €
+            <?php echo $propiedad["precio"]; ?> € / por día
         </p>
         <ul class="iconos-caracteristicas">
             <li>
@@ -90,12 +155,12 @@ incluirTemplate('header');
                 <div>
                     <label for="date">Fecha inicio:</label>
 
-                    <input type="date" min="<?php echo date("Y-m-d"); ?>">
+                    <input type="date" name="fecha_inicio" min="<?php echo date("Y-m-d"); ?>">
                 </div>
 
                 <div>
                     <label for="date">Fecha fin:</label>
-                    <input type="date" min="<?php echo date("Y-m-d"); ?>">
+                    <input type="date" name="fecha_fin" min="<?php echo date("Y-m-d"); ?>">
                 </div>
             </div>
             <div class="contenedor-boton-reserva">
