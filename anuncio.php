@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             } else {
                 $select_reservas = "SELECT * FROM reserva WHERE propiedad_idpropiedad = $id";
                 $result_reservas = mysqli_query($db, $select_reservas);
-                
+
                 $flag = false;
                 while ($reserva = mysqli_fetch_assoc($result_reservas)) {
                     $rfecha_inicio = strtotime($reserva["fecha_inicio"]);
@@ -171,9 +171,33 @@ incluirTemplate('header');
         </form>
     </div>
 
+    <?php
+    $query = "SELECT v.*, u.nombre FROM valoracion v JOIN usuario u ON
+              v.usuario_idusuario = u.idusuario
+              ORDER BY valoracion DESC";
+    $resultado = mysqli_query($db, $query);
+
+    ?>
     <h2>Comentarios</h2>
     <div class="contenedor seccion">
+    <?php while ($comentario = mysqli_fetch_assoc($resultado)) : ?>
+        <div class="comentario">
+            <p>Usuario: <?php echo $comentario["nombre"] ? $comentario["nombre"] : 'Anónimo' ?> </p>
+            <P>Estrellas: 
+            <?php 
+            for ($i=0; $i < $comentario["valoracion"]; $i++) { 
+                echo '<span class="iluminada">★</span>';
+            }
+            $diff = 5 - $comentario["valoracion"];
+            for ($i=0; $i < $diff; $i++) { 
+                echo '★';
+            }
 
+            ?>
+            </P>
+            <P> Opinión: <br><?php echo $comentario["opinion"]; ?></P>
+        </div>
+    <?php endwhile; ?>
     </div>
 
 </main>

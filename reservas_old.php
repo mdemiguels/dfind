@@ -25,8 +25,7 @@ $registrado = $_GET["registrado"] ?? null;
 $actualizado = $_GET["actualizado"] ?? null;
 $eliminado = $_GET["eliminado"] ?? null;
 $comentado = $_GET["comentado"] ?? null;
-
-$date = strtotime(date("d-m-Y"));
+$error = $_GET["error"] ?? null;
 
 incluirTemplate('header');
 
@@ -41,6 +40,10 @@ incluirTemplate('header');
 
     <?php if (intval($comentado) === 1) : ?>
         <p class="alerta exito">Comentario creado con éxito</p>
+    <?php endif; ?>
+
+    <?php if (intval($error) === 1) : ?>
+        <p class="alerta error">Ya ha comentado esa reserva</p>
     <?php endif; ?>
 
     <a class="boton boton-verde" href="reservas.php">Reservas actuales</a>
@@ -63,6 +66,9 @@ incluirTemplate('header');
                 echo "<td colspan=6>Actualmente no tiene ninguna reserva</td>";
             } else {
                 while ($reserva = mysqli_fetch_assoc($resultado_select)) :
+                    $query = "SELECT * FROM valoracion WHERE reserva_idreserva = " . $reserva["idreserva"];
+                    $resultado = mysqli_query($db, $query);
+
             ?>
                     <tr>
                         <td><?php echo $reserva["titulo"] ?></td>
@@ -76,15 +82,11 @@ incluirTemplate('header');
                         <td><?php echo $fecha_fin ?></td>
                         <td>
                             <div class="acciones">
-                                <?php
-                                $fecha_inicio = strtotime($fecha_inicio);
-                                $fecha_fin = strtotime($fecha_fin);
-
-                                if ($fecha_fin < $date) :
-                                ?>
-                                    <a href="valoracion.php?id=<?php echo $reserva["idreserva"]; ?>"><img class="icono-tabla" src="build/img/opinion.svg" alt="Icono actualizar" loading="lazy"></a>
-
-                                <?php endif; ?>
+                            <?php if ($resultado->num_rows === 0) { ?>
+                                <a href="valoracion.php?id=<?php echo $reserva["idreserva"]; ?>"><img class="icono-tabla" src="build/img/opinion.svg" alt="Icono actualizar" loading="lazy"></a>
+                            <?php } else { ?>
+                                <a href="reservas_old.php?error=1"><img class="icono-tabla" src="build/img/opinion.svg" alt="Icono actualizar" loading="lazy"></a>
+                            <?php } ?>
                             </div>
                         </td>
                     </tr>
