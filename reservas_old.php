@@ -16,8 +16,8 @@ $db = conectarDB(); // Conexión con la Base de datos
 $query = "SELECT p.*, r.*, i.* FROM propiedad p
         JOIN imagen i ON i.propiedad_idpropiedad = p.idpropiedad 
         JOIN reserva r ON p.idpropiedad = r.propiedad_idpropiedad 
-        WHERE r.usuario_idusuario = 2 AND i.destacada = 1 AND r.fecha_inicio<now()
-        ORDER BY r.fecha_inicio DESC;";
+        WHERE r.usuario_idusuario = ". $_SESSION["id"] ." AND i.destacada = 1 AND r.fecha_inicio<now()
+        ORDER BY r.fecha_inicio DESC LIMIT 10;";
 
 $resultado_select = mysqli_query($db, $query);
 
@@ -73,7 +73,7 @@ incluirTemplate('header');
                     <tr>
                         <td><?php echo $reserva["titulo"] ?></td>
                         <td><img class="imagen-tabla" src="img_propiedades/<?php echo $reserva["imagen"] ?>" alt="Imagen alojamiento"></td>
-                        <td><?php echo $reserva["precio"] ?> €</td>
+                        <td><?php echo $reserva["precio_total"] ?> €</td>
                         <?php
                         $fecha_inicio = date_format(date_create($reserva["fecha_inicio"]), "d-m-Y");
                         $fecha_fin = date_format(date_create($reserva["fecha_fin"]), "d-m-Y");

@@ -172,32 +172,38 @@ incluirTemplate('header');
     </div>
 
     <?php
-    $query = "SELECT v.*, u.nombre FROM valoracion v JOIN usuario u ON
-              v.usuario_idusuario = u.idusuario
-              ORDER BY valoracion DESC";
+    $query = "SELECT v.*, u.nombre FROM valoracion v JOIN 
+    reserva r ON v.reserva_idreserva = r.idreserva JOIN 
+    usuario u ON v.usuario_idusuario = u.idusuario 
+    WHERE r.propiedad_idpropiedad = $id ORDER BY valoracion DESC ";
     $resultado = mysqli_query($db, $query);
 
     ?>
     <h2>Comentarios</h2>
     <div class="contenedor seccion">
-    <?php while ($comentario = mysqli_fetch_assoc($resultado)) : ?>
-        <div class="comentario">
-            <p>Usuario: <?php echo $comentario["nombre"] ? $comentario["nombre"] : 'Anónimo' ?> </p>
-            <P>Estrellas: 
-            <?php 
-            for ($i=0; $i < $comentario["valoracion"]; $i++) { 
-                echo '<span class="iluminada">★</span>';
-            }
-            $diff = 5 - $comentario["valoracion"];
-            for ($i=0; $i < $diff; $i++) { 
-                echo '★';
-            }
-
-            ?>
-            </P>
-            <P> Opinión: <br><?php echo $comentario["opinion"]; ?></P>
-        </div>
-    <?php endwhile; ?>
+    <?php
+    
+    if ($resultado->num_rows > 0) {
+        while ($comentario = mysqli_fetch_assoc($resultado)) : ?>
+            <div class="comentario">
+                <p>Usuario: <?php echo $comentario["nombre"] ? $comentario["nombre"] : 'Anónimo' ?> </p>
+                <P>Estrellas: 
+                <?php 
+                for ($i=0; $i < $comentario["valoracion"]; $i++) { 
+                    echo '<span class="iluminada">★</span>';
+                }
+                $diff = 5 - $comentario["valoracion"];
+                for ($i=0; $i < $diff; $i++) { 
+                    echo '★';
+                }
+    
+                ?>
+                </P>
+                <P> Opinión: <br><?php echo $comentario["opinion"]; ?></P>
+            </div>
+        <?php endwhile; }else {
+            echo "<div class='no-result'><p>Aún no hay comentarios de esta propiedad</p></div>";
+        } ?>
     </div>
 
 </main>

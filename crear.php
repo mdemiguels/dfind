@@ -35,8 +35,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $habitaciones = mysqli_real_escape_string($db, $_POST["habitaciones"]);
     $aparcamiento = mysqli_real_escape_string($db, $_POST["aparcamiento"]);
     $wc = mysqli_real_escape_string($db, $_POST["wc"]);
-    $lat = mysqli_real_escape_string($db, $_POST["latitud"]);
-    $long = mysqli_real_escape_string($db, $_POST["longitud"]);
+    $coordenadas = mysqli_real_escape_string($db, $_POST["coords"]);
+
 
     // Obtener imagenes del formulario
     for ($i = 1; $i <= count($_FILES); $i++) {
@@ -85,16 +85,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $errores[] = "El numero de baños es obligatorio";
     }
 
-    if (!$lat || !$long) {
-        $errores[] = "Los datos de ubicación son obligacorios";
+    if (!$coordenadas) {
+        $errores[] = "La ubicación del alojamiento es obligatoria";
     }
-
-
 
     if (empty($errores)) {
 
+        $lat = substr($coordenadas, 1, (strpos($coordenadas, ",")));
+        $long = substr($coordenadas, (strpos($coordenadas, ",") + 2), -1);
+
         $insert_propiedad = "INSERT INTO propiedad(usuario_idusuario, titulo, precio, descripcion, habitaciones, wc, estacionamiento, latitud, longitud)
-        VALUES(". $_SESSION["id"] ."'$titulo', '$precio', '$descripcion', '$habitaciones', '$wc', '$aparcamiento', '$lat', '$long');";
+        VALUES(" . $_SESSION["id"] . "'$titulo', '$precio', '$descripcion', '$habitaciones', '$wc', '$aparcamiento', '$lat', '$long');";
         $resultado_insert = mysqli_query($db, $insert_propiedad);
 
         if ($resultado_insert) {
@@ -190,12 +191,13 @@ incluirTemplate('header');
         </fieldset>
 
         <fieldset>
-            <legend>Ubicación</legend>
-            <label for="latitud">latitud</label>
-            <input type="text" id="latitud" name="latitud" value="<?php echo $lat; ?>" placeholder="Ej: 36.72639109069393">
-
-            <label for="longitud">longitud</label>
-            <input type="text" id="longitud" name="longitud" value="<?php echo $long; ?>" placeholder="Ej: -4.443076401628604">
+            <legend>Ubicación (Arrastre el marcador a su alojamiento)</legend>
+            </div>
+            <input type="text" name="coords" id="coords" readonly>
+            </div>
+            <div id="map2">
+                <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCassddZiBKdhOXC5f7CbJITS8naXOvdXM"> </script>
+            </div>
 
         </fieldset>
 
@@ -207,3 +209,28 @@ incluirTemplate('header');
 <?php
 incluirTemplate('footer');
 ?>
+
+<script type="text/javascript">
+    var map;
+
+    function initialize() {
+        map = new google.maps.Map(document.getElementById('map2'), {
+            zoom: 10,
+            center: {
+                lat: 36.7215799939073,
+                lng: -4.424398787614669
+            }
+        });
+
+        var marker = new google.maps.Marker({
+            position: map.getCenter(),
+            map: map,
+            draggable: true
+        });
+
+        google.maps.event.addListener(marker, 'dragend', function(event) {
+            document.getElementById("coords").value = this.getPosition().toString();
+        });
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);
+</script>
