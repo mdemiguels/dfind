@@ -17,7 +17,7 @@ $query = "SELECT p.*, r.*, i.* FROM propiedad p
         JOIN imagen i ON i.propiedad_idpropiedad = p.idpropiedad 
         JOIN reserva r ON p.idpropiedad = r.propiedad_idpropiedad 
         WHERE r.usuario_idusuario = ". $_SESSION["id"] ." AND i.destacada = 1 AND r.fecha_inicio<now()
-        ORDER BY r.fecha_inicio DESC LIMIT 10;";
+        ORDER BY r.fecha_inicio DESC";
 
 $resultado_select = mysqli_query($db, $query);
 

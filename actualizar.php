@@ -46,8 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $habitaciones = mysqli_real_escape_string($db, $_POST["habitaciones"]);
     $aparcamiento = mysqli_real_escape_string($db, $_POST["aparcamiento"]);
     $wc = mysqli_real_escape_string($db, $_POST["wc"]);
-    $lat = mysqli_real_escape_string($db, $_POST["latitud"]);
-    $long = mysqli_real_escape_string($db, $_POST["longitud"]);
+    $coordenadas = mysqli_real_escape_string($db, $_POST["coords"]);
 
     // Obtener imagenes del formulario
     for ($i = 1; $i <= count($_FILES); $i++) {
@@ -95,10 +94,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if (empty($errores)) {
 
+
+        $lat = substr($coordenadas, 1, (strpos($coordenadas, ",")-1));
+        $long = substr($coordenadas, (strpos($coordenadas, ",") + 2), -1);
+
         $update_propiedad = "UPDATE propiedad SET titulo='$titulo', precio=$precio, descripcion='$descripcion', 
-                            habitaciones=$habitaciones, wc=$wc, estacionamiento=$aparcamiento, latitud=$lat, longitud=$long 
+                            habitaciones=$habitaciones, wc=$wc, estacionamiento=$aparcamiento, latitud='$lat', longitud='$long' 
                             WHERE idpropiedad = $id;";
+
         $resultado_update = mysqli_query($db, $update_propiedad);
+
+
 
         if ($resultado_update) {
             // Subida de imágenes al servidor
@@ -144,6 +150,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 }
             }
         }
+
         header('Location: alquileres.php?actualizado=1');
     }
 }
@@ -202,12 +209,13 @@ incluirTemplate('header');
         </fieldset>
 
         <fieldset>
-            <legend>Ubicación</legend>
-            <label for="latitud">latitud</label>
-            <input type="text" id="latitud" name="latitud" value="<?php echo $lat; ?>" placeholder="Ej: 36.72639109069393">
-
-            <label for="longitud">longitud</label>
-            <input type="text" id="longitud" name="longitud" value="<?php echo $long; ?>" placeholder="Ej: -4.443076401628604">
+            <legend>Ubicación (Arrastre el marcador a su alojamiento)</legend>
+            </div>
+            <input type="text" name="coords" value="<?php echo $lat . ', ' . $long; ?>" id="coords" readonly>
+            </div>
+            <div id="map2">
+                <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCassddZiBKdhOXC5f7CbJITS8naXOvdXM"> </script>
+            </div>
 
         </fieldset>
 
@@ -219,3 +227,28 @@ incluirTemplate('header');
 <?php
 incluirTemplate('footer');
 ?>
+
+<script type="text/javascript">
+    var map;
+
+    function initialize() {
+        map = new google.maps.Map(document.getElementById('map2'), {
+            zoom: 10,
+            center: {
+                lat: <?php echo $lat; ?>,
+                lng: <?php echo $long; ?>
+            }
+        });
+
+        var marker = new google.maps.Marker({
+            position: map.getCenter(),
+            map: map,
+            draggable: true
+        });
+
+        google.maps.event.addListener(marker, 'dragend', function(event) {
+            document.getElementById("coords").value = this.getPosition().toString();
+        });
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);
+</script>

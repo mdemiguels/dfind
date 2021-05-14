@@ -91,8 +91,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if (empty($errores)) {
 
-        $lat = substr($coordenadas, 1, (strpos($coordenadas, ",")));
+        $lat = substr($coordenadas, 1, (strpos($coordenadas, ",")-1));
         $long = substr($coordenadas, (strpos($coordenadas, ",") + 2), -1);
+
+        echo $lat;
 
         $insert_propiedad = "INSERT INTO propiedad(usuario_idusuario, titulo, precio, descripcion, habitaciones, wc, estacionamiento, latitud, longitud)
         VALUES(" . $_SESSION["id"] . "'$titulo', '$precio', '$descripcion', '$habitaciones', '$wc', '$aparcamiento', '$lat', '$long');";

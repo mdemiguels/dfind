@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             if ($fecha_inicio > $fecha_fin) {
                 $errores[] = "La fecha de fin debe ser mayor que la de inicio";
             } else {
-                $select_reservas = "SELECT * FROM reserva WHERE propiedad_idpropiedad = $id";
+                $select_reservas = "SELECT * FROM reserva";
                 $result_reservas = mysqli_query($db, $select_reservas);
 
                 $flag = false;

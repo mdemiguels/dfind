@@ -72,7 +72,7 @@ incluirTemplate('header');
 
             <div class="boton-login">
                 <input type="submit" value="Entrar" class="boton boton-amarillo">
-                <a href="registro.php" class="boton boton-verde">Resgistrarse</a>
+                <a href="registro.php" class="boton boton-verde">Registrarse</a>
             </div>
         </form>
     </div>
