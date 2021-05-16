@@ -94,11 +94,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $lat = substr($coordenadas, 1, (strpos($coordenadas, ",")-1));
         $long = substr($coordenadas, (strpos($coordenadas, ",") + 2), -1);
 
-        echo $lat;
-
         $insert_propiedad = "INSERT INTO propiedad(usuario_idusuario, titulo, precio, descripcion, habitaciones, wc, estacionamiento, latitud, longitud)
-        VALUES(" . $_SESSION["id"] . "'$titulo', '$precio', '$descripcion', '$habitaciones', '$wc', '$aparcamiento', '$lat', '$long');";
+        VALUES(" . $_SESSION["id"] . ", '$titulo', '$precio', '$descripcion', '$habitaciones', '$wc', '$aparcamiento', '$lat', '$long');";
         $resultado_insert = mysqli_query($db, $insert_propiedad);
+
+        echo "<pre>";
+        var_dump($insert_propiedad);
+        echo "</pre>";
 
         if ($resultado_insert) {
             $select_id = "SELECT idpropiedad FROM propiedad WHERE latitud = '$lat' AND longitud = '$long'";

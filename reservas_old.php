@@ -48,7 +48,7 @@ incluirTemplate('header');
 
     <a class="boton boton-verde" href="reservas.php">Reservas actuales</a>
 
-    <table class="propiedades">
+    <table class="reservas">
         <thead>
             <tr>
                 <th>Titulo</th>

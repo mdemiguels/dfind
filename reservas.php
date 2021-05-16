@@ -59,7 +59,7 @@ incluirTemplate('header');
 
     <a class="boton boton-verde" href="reservas_old.php">Historial de reservas</a>
 
-    <table class="propiedades">
+    <table class="reservas">
         <thead>
             <tr>
                 <th>Titulo</th>
