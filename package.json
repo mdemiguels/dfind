@@ -1,15 +1,16 @@
 {
-  "name": "salon-php-sass",
+  "name": "dfind",
   "version": "1.0.0",
-  "description": "",
+  "description": "Plataforma de alojamiento vacacional",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Miguel Sánchez",
   "license": "ISC",
   "devDependencies": {
     "cssnano": "^4.1.10",
+    "cypress": "^7.3.0",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^7.0.1",
     "gulp-cache": "^1.1.3",
