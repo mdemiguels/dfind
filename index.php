@@ -15,7 +15,7 @@ incluirTemplate('header', $inicio = true);
 ?>
 
 <main class="contenedor seccion">
-    <h1>Más sobre nosotros</h1>
+    <h2>Más sobre nosotros</h2>
 
     <!-- Slideshow container -->
     <div class="slideshow-container">
@@ -53,52 +53,16 @@ incluirTemplate('header', $inicio = true);
     <a href="mailto:faq@dfind.com" class="boton-amarillo">Contáctanos</a>
 </section>
 
+<?php
+$query = "SELECT * FROM blog LIMIT 3";
+$resultado = mysqli_query($db, $query);
+
+?>
+
 <div class="contenedor seccion">
     <section class="blog">
         <h3>Últimos posts de nuestro blog</h3>
-        <article class="entrada-blog">
-            <div class="imagen">
-                <picture>
-                    <source srcset="build/img/blog1.webp" type="image/webp">
-                    <source srcset="build/img/blog1.jpg" type="image/jpeg">
-                    <img src="build/img/blog1.jpg" alt="Texto entrada blog">
-                </picture>
-            </div>
-            <div class="texto-entrada">
-                <a href="entrada.php">
-                    <h4>Terraza en el techo de tu casa</h4>
-                    <p class="informacion-meta">Escrito el: <span>20/20/2021</span> por: <span>Admin</span></p>
-
-                    <p>
-                        Cosejos para construir una terraza en el techo de tu casa con los mejores materiales y
-                        ahorrando dinero.
-                    </p>
-                </a>
-            </div>
-        </article>
-        <article class="entrada-blog">
-            <div class="imagen">
-                <picture>
-                    <source srcset="build/img/blog2.webp" type="image/webp">
-                    <source srcset="build/img/blog2.jpg" type="image/jpeg">
-                    <img src="build/img/blog2.jpg" alt="Texto entrada blog">
-                </picture>
-            </div>
-            <div class="texto-entrada">
-                <a href="entrada.php">
-                    <h4>Guía de decoración de tu hogar</h4>
-                    <p class="informacion-meta">Escrito el: <span>20/20/2021</span> por: <span>Admin</span></p>
-
-                    <p>
-                        Cosejos para construir una terraza en el techo de tu casa con los mejores materiales y
-                        ahorrando dinero.
-                    </p>
-                </a>
-            </div>
-        </article>
-    </section>
-
-
+        <?php include "includes/templates/entradas.php"; ?>
 </div>
 
 <?php

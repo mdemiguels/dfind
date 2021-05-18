@@ -211,7 +211,7 @@ incluirTemplate('header');
         <fieldset>
             <legend>Ubicación (Arrastre el marcador a su alojamiento)</legend>
             </div>
-            <input type="text" name="coords" value="<?php echo $lat . ', ' . $long; ?>" id="coords" readonly>
+            <input type="text" name="coords" value="<?php echo '('.$lat . ', ' . $long.')'; ?>" id="coords" readonly>
             </div>
             <div id="map2">
                 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCassddZiBKdhOXC5f7CbJITS8naXOvdXM"> </script>
