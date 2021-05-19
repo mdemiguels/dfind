@@ -54,7 +54,7 @@ incluirTemplate('header', $inicio = true);
 </section>
 
 <?php
-$query = "SELECT * FROM blog LIMIT 3";
+$query = "SELECT * FROM blog ORDER BY fecha_creado DESC LIMIT 3";
 $resultado = mysqli_query($db, $query);
 
 ?>

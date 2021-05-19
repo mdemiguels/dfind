@@ -160,7 +160,7 @@ incluirTemplate('header');
 
                 <div>
                     <label for="date">Fecha fin:</label>
-                    <input type="date" name="fecha_fin" min="<?php echo date("Y-m-d"); ?>">
+                    <input type="date" name="fecha_fin" min="<?php echo date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days")); ?>">
                 </div>
             </div>
             <div class="contenedor-boton-reserva">
@@ -184,9 +184,11 @@ incluirTemplate('header');
     <?php
     
     if ($resultado->num_rows > 0) {
-        while ($comentario = mysqli_fetch_assoc($resultado)) : ?>
+        while ($comentario = mysqli_fetch_assoc($resultado)) : 
+        $fecha = date_format(date_create($comentario["creado"]), "d-m-Y");
+        ?>
             <div class="comentario">
-                <p>Usuario: <?php echo $comentario["nombre"] ? $comentario["nombre"] : 'Anónimo' ?> </p>
+                <p>Usuario: <?php echo $comentario["nombre"] ? $comentario["nombre"] : 'Anónimo' ?> (<?php echo $fecha; ?>) </p>
                 <P>Estrellas: 
                 <?php 
                 for ($i=0; $i < $comentario["valoracion"]; $i++) { 

@@ -35,7 +35,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $_SESSION["nombre"] = $usuario["nombre"];
             $_SESSION["email"] = $usuario["correo"];
 
-            header("Location: index.php");
+            if ($usuario["correo"] === "miguelschz1997@gmail.com") {
+                $_SESSION["admin"] = true;
+            }
+
+            header("Location: /dfind/");
         }else {
             $errores[] = "La contraseña no es correcta";
         }

@@ -28,7 +28,7 @@ $auth = $_SESSION["login"] ?? false;
         <div class="contenedor contenido-header">
 
             <div class="barra">
-                <a href="index.php">
+                <a href="/dfind/">
                     <img src="/dfind/build/img/logo.svg" alt="Logotipo de dfind">
                 </a>
 

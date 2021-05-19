@@ -73,8 +73,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $errores[] = "El tamaño de las imagenes no debe ser mayor de 1.5MB";
     }
 
-    if (strlen($descripcion) < 200 && strlen($descripcion) > 220) {
-        $errores[] = "Debes añadir una descripción detallada de la vivienda de entre 150 y 320 caracteres";
+    if (strlen($descripcion) < 200) {
+        $errores[] = "Debes añadir una descripción detallada de la vivienda de más de 200 caracteres";
     }
 
     if (!$habitaciones) {
@@ -97,10 +97,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $insert_propiedad = "INSERT INTO propiedad(usuario_idusuario, titulo, precio, descripcion, habitaciones, wc, estacionamiento, latitud, longitud)
         VALUES(" . $_SESSION["id"] . ", '$titulo', '$precio', '$descripcion', '$habitaciones', '$wc', '$aparcamiento', '$lat', '$long');";
         $resultado_insert = mysqli_query($db, $insert_propiedad);
-
-        echo "<pre>";
-        var_dump($insert_propiedad);
-        echo "</pre>";
 
         if ($resultado_insert) {
             $select_id = "SELECT idpropiedad FROM propiedad WHERE latitud = '$lat' AND longitud = '$long'";
@@ -219,10 +215,10 @@ incluirTemplate('footer');
 
     function initialize() {
         map = new google.maps.Map(document.getElementById('map2'), {
-            zoom: 10,
+            zoom: 5,
             center: {
-                lat: 36.7215799939073,
-                lng: -4.424398787614669
+                lat: 40.02311493336161,
+                lng:  -4.152003423270071
             }
         });
 
