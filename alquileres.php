@@ -12,9 +12,15 @@ require 'includes/config/database.php';
 $db = conectarDB(); // Conexión con la Base de datos
 
 // Extracción de datos de la tabla propiedad
-$query = "SELECT p.*, i.imagen FROM propiedad p 
-          JOIN imagen i ON p.idpropiedad = i.propiedad_idpropiedad 
-          WHERE p.usuario_idusuario=" . $_SESSION['id'] . " AND i.destacada = 1";
+if ($_SESSION["admin"]) {
+    $query = "SELECT p.*, i.imagen FROM propiedad p 
+    JOIN imagen i ON p.idpropiedad = i.propiedad_idpropiedad 
+    WHERE i.destacada = 1";
+}else {
+    $query = "SELECT p.*, i.imagen FROM propiedad p 
+    JOIN imagen i ON p.idpropiedad = i.propiedad_idpropiedad 
+    WHERE p.usuario_idusuario=" . $_SESSION['id'] . " AND i.destacada = 1";
+}
 
 $resultado_select = mysqli_query($db, $query);
 
