@@ -196,7 +196,7 @@ incluirTemplate('header');
             <input type="text" name="coords" id="coords" readonly>
             </div>
             <div id="map2">
-                <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCassddZiBKdhOXC5f7CbJITS8naXOvdXM"> </script>
+                <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"> </script>
             </div>
 
         </fieldset>

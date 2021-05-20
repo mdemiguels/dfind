@@ -145,7 +145,7 @@ incluirTemplate('header');
 
     <h2>Ubicación</h2>
     <div class="contenedor seccion" id="map">
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCassddZiBKdhOXC5f7CbJITS8naXOvdXM"> </script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"> </script>
     </div>
 
     <h2>Reserva</h2>
