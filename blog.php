@@ -6,7 +6,7 @@ $db = conectarDB();
 
 incluirTemplate('header');
 
-$query = "SELECT * FROM blog";
+$query = "SELECT * FROM blog ORDER BY fecha_creado DESC";
 $resultado = mysqli_query($db, $query);
 
 $registrado = $_GET["registrado"] ?? null;

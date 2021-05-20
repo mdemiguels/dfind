@@ -1,6 +1,9 @@
 <?php
 require 'includes/funciones.php';
-session_start();
+
+if (!isset($_SESSION)) {
+    session_start();
+}
 
 $admin = $_SESSION["admin"] ?? false;
 
@@ -73,8 +76,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             $insert_imagen = "INSERT INTO blog(titulo, contenido, imagen) 
                     VALUES('$titulo', '$contenido', '$ruta_destino');";
-
-            echo $insert_imagen;
 
             $resultado_insert = mysqli_query($db, $insert_imagen);
             if ($resultado_insert) {
