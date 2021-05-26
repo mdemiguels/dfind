@@ -5,4 +5,4 @@ Para instalar las dependencias de Gulp, abre la consola en la ubicación del pro
 
 Introduce tu propia API key en los archivos que usen mapas para que la API de Google Maps funcione
 
-Introduce los datos de tu base de datos en el archivo config.php
+Introduce los datos de tu base de datos en el archivo database.php
